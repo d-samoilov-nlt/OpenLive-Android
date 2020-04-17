@@ -13,19 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_top_layout_height"
         android:layout_alignParentTop="true">
-        <ImageView
-            android:layout_width="@dimen/live_leave_btn_size"
-            android:layout_height="@dimen/live_leave_btn_size"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="6dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/live_top_layout_margin"
-            android:layout_marginEnd="@dimen/live_top_layout_margin"
-            android:src="@drawable/btn_leave"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_bg_half_transparent"
-            android:onClick="onLeaveClicked"/>
+
         <RelativeLayout
             android:id="@+id/live_name_space_layout"
             android:layout_width="@dimen/live_name_board_width"
