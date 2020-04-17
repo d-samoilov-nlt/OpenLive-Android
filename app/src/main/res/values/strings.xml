@@ -30,8 +30,8 @@
 
     <!-- Role Choose Activity -->
     <string name="select_role_title">Please choose your role</string>
-    <string name="select_role_broadcaster">Broadcaster</string>
-    <string name="select_role_audience">Audience</string>
+    <string name="select_role_broadcaster">Coach</string>
+    <string name="select_role_audience">Student</string>
     <string name="select_role_broadcaster_hint">Join as broadcaster</string>
     <string name="select_role_audience_hint">Join as audience</string>
 
