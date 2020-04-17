@@ -23,6 +23,7 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 
 public class LiveActivity extends RtcBaseActivity {
     private static final String TAG = LiveActivity.class.getSimpleName();
+    private boolean isCoachMode = false;
 
     private VideoGridContainer mVideoGridContainer;
     private ImageView mMuteAudioBtn;
@@ -48,6 +49,9 @@ public class LiveActivity extends RtcBaseActivity {
         int role = getIntent().getIntExtra(
                 io.agora.openlive.Constants.KEY_CLIENT_ROLE,
                 Constants.CLIENT_ROLE_AUDIENCE);
+
+        isCoachMode = (role == Constants.CLIENT_ROLE_BROADCASTER);
+
         boolean isBroadcaster = (role == Constants.CLIENT_ROLE_BROADCASTER);
 
         mMuteVideoBtn = findViewById(R.id.live_btn_mute_video);
@@ -66,6 +70,11 @@ public class LiveActivity extends RtcBaseActivity {
 
         rtcEngine().setClientRole(role);
         if (isBroadcaster) startBroadcast();
+        if (isCoachMode) {
+            joinChannelAsCoach();
+        } else {
+            joinChannelAsStudent();
+        }
     }
 
     private void initUserIcon() {
@@ -93,21 +102,18 @@ public class LiveActivity extends RtcBaseActivity {
 
     private void startBroadcast() {
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
-        SurfaceView surface = prepareRtcVideo(0, true);
-        mVideoGridContainer.addUserVideoSurface(0, surface, true);
         mMuteAudioBtn.setActivated(true);
     }
 
     private void stopBroadcast() {
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
-        removeRtcVideo(0, true);
-        mVideoGridContainer.removeUserVideo(0, true);
         mMuteAudioBtn.setActivated(false);
     }
 
     @Override
     public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
         // Do nothing at the moment
+
     }
 
     @Override
@@ -141,8 +147,14 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     private void removeRemoteUser(int uid) {
-        removeRtcVideo(uid, false);
-        mVideoGridContainer.removeUserVideo(uid, false);
+        if (uid == io.agora.openlive.Constants.COACH_USER_ID) {
+            removeRtcEventHandler(this);
+            rtcEngine().leaveChannel();
+            finish();
+        } else {
+            removeRtcVideo(uid, false);
+            mVideoGridContainer.removeUserVideo(uid, false);
+        }
     }
 
     @Override

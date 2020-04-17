@@ -39,4 +39,6 @@ public class Constants {
     public static final String PREF_MIRROR_ENCODE = "pref_mirror_encode";
 
     public static final String KEY_CLIENT_ROLE = "key_client_role";
+    public static final String TEST_CHANNEL_NAME = "test_nlt_channel";
+    public static final int COACH_USER_ID = 777;
 }

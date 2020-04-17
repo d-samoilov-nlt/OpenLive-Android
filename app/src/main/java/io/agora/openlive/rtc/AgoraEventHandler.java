@@ -1,7 +1,5 @@
 package io.agora.openlive.rtc;
 
-import android.graphics.PixelFormat;
-
 import java.util.ArrayList;
 
 import io.agora.rtc.IRtcEngineEventHandler;

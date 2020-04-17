@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewTreeObserver;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import io.agora.openlive.Constants;
 import io.agora.openlive.R;
 
 public class MainActivity extends BaseActivity {
@@ -136,6 +136,7 @@ public class MainActivity extends BaseActivity {
         mLogo = findViewById(R.id.main_logo);
 
         mTopicEdit = findViewById(R.id.topic_edit);
+        mTopicEdit.setText(Constants.TEST_CHANNEL_NAME);
         mTopicEdit.addTextChangedListener(mTextWatcher);
 
         mStartBtn = findViewById(R.id.start_broadcast_button);
