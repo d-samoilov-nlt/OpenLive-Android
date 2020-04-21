@@ -3,8 +3,8 @@ package io.agora.openlive;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import io.agora.openlive.rtc.EngineConfig;
 import io.agora.openlive.rtc.AgoraEventHandler;
+import io.agora.openlive.rtc.EngineConfig;
 import io.agora.openlive.rtc.EventHandler;
 import io.agora.openlive.stats.StatsManager;
 import io.agora.openlive.utils.FileUtil;
@@ -12,10 +12,10 @@ import io.agora.openlive.utils.PrefManager;
 import io.agora.rtc.RtcEngine;
 
 public class AgoraApplication extends Application {
-    private RtcEngine mRtcEngine;
-    private EngineConfig mGlobalConfig = new EngineConfig();
-    private AgoraEventHandler mHandler = new AgoraEventHandler();
-    private StatsManager mStatsManager = new StatsManager();
+    private static RtcEngine mRtcEngine;
+    private static EngineConfig mGlobalConfig = new EngineConfig();
+    private static AgoraEventHandler mHandler = new AgoraEventHandler();
+    private static StatsManager mStatsManager = new StatsManager();
 
     @Override
     public void onCreate() {
@@ -46,23 +46,23 @@ public class AgoraApplication extends Application {
         mGlobalConfig.setMirrorEncodeIndex(pref.getInt(Constants.PREF_MIRROR_ENCODE, 0));
     }
 
-    public EngineConfig engineConfig() {
+    public static EngineConfig engineConfig() {
         return mGlobalConfig;
     }
 
-    public RtcEngine rtcEngine() {
+    public static RtcEngine rtcEngine() {
         return mRtcEngine;
     }
 
-    public StatsManager statsManager() {
+    public static StatsManager statsManager() {
         return mStatsManager;
     }
 
-    public void registerEventHandler(EventHandler handler) {
+    public static void registerEventHandler(EventHandler handler) {
         mHandler.addHandler(handler);
     }
 
-    public void removeEventHandler(EventHandler handler) {
+    public static void removeEventHandler(EventHandler handler) {
         mHandler.removeHandler(handler);
     }
 

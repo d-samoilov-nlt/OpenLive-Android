@@ -8,6 +8,9 @@ import android.widget.RelativeLayout;
 import io.agora.openlive.R;
 import io.agora.rtc.Constants;
 
+import static io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER;
+import static io.agora.rtc.IRtcEngineEventHandler.ClientRole.CLIENT_ROLE_AUDIENCE;
+
 public class RoleActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class RoleActivity extends BaseActivity {
     }
 
     public void onJoinAsBroadcaster(View view) {
-        gotoLiveActivity(Constants.CLIENT_ROLE_BROADCASTER);
+        gotoLiveActivity(CLIENT_ROLE_BROADCASTER);
     }
 
     public void onJoinAsAudience(View view) {
@@ -40,8 +43,11 @@ public class RoleActivity extends BaseActivity {
 
     private void gotoLiveActivity(int role) {
         Intent intent = new Intent(getIntent());
-        intent.putExtra(io.agora.openlive.Constants.KEY_CLIENT_ROLE, role);
-        intent.setClass(getApplicationContext(), LiveActivity.class);
+        if (role == CLIENT_ROLE_AUDIENCE) {
+            intent.setClass(getApplicationContext(), LiveActivity.class);
+        } else if (role == CLIENT_ROLE_BROADCASTER) {
+            intent.setClass(getApplicationContext(), CoachLiveTypeActivity.class);
+        }
         startActivity(intent);
     }
 
