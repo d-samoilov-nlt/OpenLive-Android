@@ -5,8 +5,12 @@
 
     <io.agora.openlive.ui.VideoGridContainer
         android:id="@+id/live_video_grid_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SurfaceView
         android:id="@+id/sfv_live_room_preview"
@@ -190,10 +194,11 @@
             android:src="@drawable/btn_mute_video" />
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/ib_live_room_leave"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <ImageView
+        android:id="@+id/iv_live_room_leave"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="@dimen/live_bottom_btn_margin"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_red_close"
         app:layout_constraintBottom_toBottomOf="parent"

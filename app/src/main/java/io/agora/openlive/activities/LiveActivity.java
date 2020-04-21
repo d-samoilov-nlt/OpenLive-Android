@@ -28,7 +28,7 @@ public class LiveActivity extends RtcBaseActivity {
     private VideoGridContainer mVideoGridContainer;
     private ImageView mMuteAudioBtn;
     private ImageView mMuteVideoBtn;
-    private ImageButton mCloseSessionBtn;
+    private ImageView mCloseSessionBtn;
 
     private VideoEncoderConfiguration.VideoDimensions mVideoDimension;
 
@@ -66,7 +66,7 @@ public class LiveActivity extends RtcBaseActivity {
         mMuteAudioBtn = findViewById(R.id.live_btn_mute_audio);
         mMuteAudioBtn.setActivated(isBroadcaster);
 
-        mCloseSessionBtn = findViewById(R.id.ib_live_room_leave);
+        mCloseSessionBtn = findViewById(R.id.iv_live_room_leave);
         mCloseSessionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
