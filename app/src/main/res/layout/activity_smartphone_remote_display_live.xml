@@ -8,8 +8,8 @@
     tools:context=".activities.SmartphoneRemoteDisplayLiveActivity">
 
 
-    <SurfaceView
-        android:id="@+id/sfv_smart_remote_display_preview"
+    <RelativeLayout
+        android:id="@+id/rl_smart_remote_display_preview"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_margin="@dimen/live_top_layout_margin"

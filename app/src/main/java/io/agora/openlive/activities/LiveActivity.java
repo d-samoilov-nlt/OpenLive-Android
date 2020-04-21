@@ -5,8 +5,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -23,12 +23,12 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 
 public class LiveActivity extends RtcBaseActivity {
     private static final String TAG = LiveActivity.class.getSimpleName();
-    private boolean isCoachMode = false;
 
     private VideoGridContainer mVideoGridContainer;
     private ImageView mMuteAudioBtn;
     private ImageView mMuteVideoBtn;
-    private ImageView mCloseSessionBtn;
+
+    private RelativeLayout rlViewPreview;
 
     private VideoEncoderConfiguration.VideoDimensions mVideoDimension;
 
@@ -38,11 +38,6 @@ public class LiveActivity extends RtcBaseActivity {
         setContentView(R.layout.activity_live_room);
         initUI();
         initData();
-    }
-
-    @Override
-    public SurfaceView getSurfaceView() {
-        return findViewById(R.id.sfv_live_room_preview);
     }
 
     private void initUI() {
@@ -56,7 +51,7 @@ public class LiveActivity extends RtcBaseActivity {
                 io.agora.openlive.Constants.KEY_CLIENT_ROLE,
                 Constants.CLIENT_ROLE_AUDIENCE);
 
-        isCoachMode = (role == Constants.CLIENT_ROLE_BROADCASTER);
+        boolean isCoachMode = (role == Constants.CLIENT_ROLE_BROADCASTER);
 
         boolean isBroadcaster = (role == Constants.CLIENT_ROLE_BROADCASTER);
 
@@ -66,7 +61,7 @@ public class LiveActivity extends RtcBaseActivity {
         mMuteAudioBtn = findViewById(R.id.live_btn_mute_audio);
         mMuteAudioBtn.setActivated(isBroadcaster);
 
-        mCloseSessionBtn = findViewById(R.id.iv_live_room_leave);
+        ImageView mCloseSessionBtn = findViewById(R.id.iv_live_room_leave);
         mCloseSessionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,10 +77,12 @@ public class LiveActivity extends RtcBaseActivity {
         mVideoGridContainer = findViewById(R.id.live_video_grid_layout);
         mVideoGridContainer.setStatsManager(statsManager());
 
+        rlViewPreview = findViewById(R.id.rl_live_room_preview);
+
         rtcEngine().setClientRole(role);
-        if (isBroadcaster) startBroadcast();
         if (isCoachMode) {
             joinChannelAsCoach();
+            startBroadcast();
         } else {
             joinChannelAsStudent();
         }
@@ -117,11 +114,14 @@ public class LiveActivity extends RtcBaseActivity {
     private void startBroadcast() {
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
         mMuteAudioBtn.setActivated(true);
+        SurfaceView surfaceView = prepareRtcVideo(0, true);
+        rlViewPreview.addView(surfaceView);
     }
 
     private void stopBroadcast() {
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
         mMuteAudioBtn.setActivated(false);
+        rlViewPreview.removeAllViews();
     }
 
     @Override

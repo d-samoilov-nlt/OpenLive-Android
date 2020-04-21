@@ -12,8 +12,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SurfaceView
-        android:id="@+id/sfv_live_room_preview"
+    <RelativeLayout
+        android:id="@+id/rl_live_room_preview"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_margin="@dimen/live_top_layout_margin"

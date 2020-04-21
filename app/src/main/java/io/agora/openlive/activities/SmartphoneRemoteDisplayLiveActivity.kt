@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
-import android.view.SurfaceView
 import android.widget.Chronometer
+import android.widget.RelativeLayout
 import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
 import com.google.android.gms.cast.CastDevice
@@ -14,6 +14,7 @@ import com.google.android.gms.cast.CastMediaControlIntent
 import com.google.android.gms.cast.CastRemoteDisplayLocalService
 import com.google.android.gms.cast.CastRemoteDisplayLocalService.NotificationSettings
 import com.google.android.gms.common.api.Status
+import io.agora.openlive.Constants
 import io.agora.openlive.R
 import io.agora.openlive.service.CastRemoteDisplayService
 import kotlinx.android.synthetic.main.activity_smartphone_remote_display_live.*
@@ -24,12 +25,11 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
     private val TAG = SmartphoneRemoteDisplayLiveActivity::class.java.simpleName
 
     private var chronometer: Chronometer? = null
+    private var rlUserPreview: RelativeLayout? = null
     private var castDevice: CastDevice? = null
     private var mediaRouter: MediaRouter? = null
     private var mediaRouteSelector: MediaRouteSelector? = null
     private var castRemoteDisplayServiceIntent: Intent? = null
-
-    override fun getSurfaceView(): SurfaceView = sfv_smart_remote_display_preview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +39,12 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
         chronometer = cm_smart_remote_display_timer
         chronometer!!.base = SystemClock.elapsedRealtime();
         chronometer!!.start()
+        rlUserPreview = rl_smart_remote_display_preview
 
         iv_smart_remote_display_timer_leave.setOnClickListener {
             closeSession()
         }
+        startUserPreview()
     }
 
     private fun closeSession() {
@@ -64,8 +66,18 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        stopUserPreview()
         chronometer!!.stop()
         closeSession()
+    }
+
+    private fun startUserPreview() {
+        val surfaceView = prepareRtcVideo(Constants.COACH_USER_ID, true)
+        rlUserPreview!!.addView(surfaceView)
+    }
+
+    private fun stopUserPreview() {
+        rlUserPreview!!.removeAllViews()
     }
 
     private fun isRemoteDisplaying(): Boolean {
@@ -89,13 +101,14 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
             }
         }
 
-        mediaRouter!!.addCallback(mediaRouteSelector!!, mMediaRouterCallback,
-                MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY)
         mediaRouter = MediaRouter.getInstance(applicationContext)
         mediaRouteSelector = MediaRouteSelector.Builder()
                 .addControlCategory(
                         CastMediaControlIntent.categoryForCast(getString(R.string.cast_app_id)))
                 .build()
+        mediaRouter!!.addCallback(mediaRouteSelector!!, mMediaRouterCallback,
+                MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY)
+
     }
 
     private val mMediaRouterCallback: MediaRouter.Callback = object : MediaRouter.Callback() {
