@@ -46,7 +46,6 @@ public class MainActivity extends BaseActivity {
     private int mBodyDefaultMarginTop;
     private EditText mTopicEdit;
     private TextView mStartBtn;
-    private ImageView mLogo;
 
     private Animator.AnimatorListener mLogoAnimListener = new Animator.AnimatorListener() {
         @Override
@@ -56,12 +55,10 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onAnimationEnd(Animator animator) {
-            mLogo.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onAnimationCancel(Animator animator) {
-            mLogo.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -103,25 +100,6 @@ public class MainActivity extends BaseActivity {
         boolean inputShown = mDisplayMetrics.heightPixels - visibleHeight > MIN_INPUT_METHOD_HEIGHT;
         mLastVisibleHeight = visibleHeight;
 
-        // Log.i(TAG, "onGlobalLayout:" + inputShown +
-        //        "|" + getWindow().getDecorView().getRootView().getViewTreeObserver());
-
-        // There is no official way to determine whether the
-        // input method dialog has already shown.
-        // This is a workaround, and if the visible content
-        // height is significantly less than the screen height,
-        // we should know that the input method dialog takes
-        // up some screen space.
-        if (inputShown) {
-            if (mLogo.getVisibility() == View.VISIBLE) {
-                mBodyLayout.animate().translationYBy(-mLogo.getMeasuredHeight())
-                        .setDuration(ANIM_DURATION).setListener(null).start();
-                mLogo.setVisibility(View.INVISIBLE);
-            }
-        } else if (mLogo.getVisibility() != View.VISIBLE) {
-            mBodyLayout.animate().translationYBy(mLogo.getMeasuredHeight())
-                    .setDuration(ANIM_DURATION).setListener(mLogoAnimListener).start();
-        }
     }
 
     @Override
@@ -133,7 +111,6 @@ public class MainActivity extends BaseActivity {
 
     private void initUI() {
         mBodyLayout = findViewById(R.id.middle_layout);
-        mLogo = findViewById(R.id.main_logo);
 
         mTopicEdit = findViewById(R.id.topic_edit);
         mTopicEdit.setText(Constants.TEST_CHANNEL_NAME);
@@ -157,11 +134,9 @@ public class MainActivity extends BaseActivity {
 
         // Logo is 0.48 times the screen width
         // ImageView logo = findViewById(R.id.main_logo);
-        param = (RelativeLayout.LayoutParams) mLogo.getLayoutParams();
         int size = (int) (mDisplayMetrics.widthPixels * 0.48);
         param.width = size;
         param.height = size;
-        mLogo.setLayoutParams(param);
 
         // Bottom margin of the main body should be two times it's top margin.
         param = (RelativeLayout.LayoutParams) mBodyLayout.getLayoutParams();
@@ -265,7 +240,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void resetLogo() {
-        mLogo.setVisibility(View.VISIBLE);
         mBodyLayout.setY(mBodyDefaultMarginTop);
     }
 

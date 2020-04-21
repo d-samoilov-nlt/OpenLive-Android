@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background">
@@ -14,30 +15,22 @@
         android:layout_marginEnd="@dimen/setting_btn_margin_right"
         android:layout_marginRight="@dimen/setting_btn_margin_right"
         android:onClick="onSettingClicked"
-        android:src="@drawable/btn_setting" />
+        android:src="@drawable/btn_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/middle_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:focusableInTouchMode="true">
-
-        <ImageView
-            android:id="@+id/main_logo"
-            android:layout_width="@dimen/logo_size"
-            android:layout_height="@dimen/logo_size"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/logo_margin_bottom"
-            android:scaleType="centerCrop"
-            android:src="@drawable/main_logo" />
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/topic_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/main_logo"
             android:layout_alignStart="@id/start_broadcast_button"
             android:layout_alignLeft="@id/start_broadcast_button"
             android:layout_alignEnd="@id/start_broadcast_button"
@@ -75,13 +68,4 @@
             android:textSize="@dimen/text_size_large" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/info_margin_bottom"
-        android:text="@string/powered_by_agora"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_small" />
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

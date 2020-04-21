@@ -24,22 +24,10 @@ public abstract class BaseActivity extends AppCompatActivity implements EventHan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowUtil.hideWindowStatusBar(getWindow());
-        setGlobalLayoutListener();
         getDisplayMetrics();
         initStatusBarHeight();
     }
 
-    private void setGlobalLayoutListener() {
-        final View layout = findViewById(Window.ID_ANDROID_CONTENT);
-        ViewTreeObserver observer = layout.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                onGlobalLayoutCompleted();
-            }
-        });
-    }
 
     /**
      * Give a chance to obtain view layout attributes when the

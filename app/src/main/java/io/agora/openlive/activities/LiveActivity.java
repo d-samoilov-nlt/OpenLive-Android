@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class LiveActivity extends RtcBaseActivity {
     private VideoGridContainer mVideoGridContainer;
     private ImageView mMuteAudioBtn;
     private ImageView mMuteVideoBtn;
+    private ImageButton mCloseSessionBtn;
 
     private VideoEncoderConfiguration.VideoDimensions mVideoDimension;
 
@@ -59,6 +61,14 @@ public class LiveActivity extends RtcBaseActivity {
 
         mMuteAudioBtn = findViewById(R.id.live_btn_mute_audio);
         mMuteAudioBtn.setActivated(isBroadcaster);
+
+        mCloseSessionBtn = findViewById(R.id.ib_live_room_leave);
+        mCloseSessionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSession();
+            }
+        });
 
         ImageView beautyBtn = findViewById(R.id.live_btn_beautification);
         beautyBtn.setActivated(true);
@@ -92,12 +102,12 @@ public class LiveActivity extends RtcBaseActivity {
 
     @Override
     protected void onGlobalLayoutCompleted() {
-        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
-        RelativeLayout.LayoutParams params =
-                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
-        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
-        topLayout.setLayoutParams(params);
-        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
+//        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
+//        RelativeLayout.LayoutParams params =
+//                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
+//        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
+//        topLayout.setLayoutParams(params);
+//        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
     }
 
     private void startBroadcast() {
@@ -148,13 +158,17 @@ public class LiveActivity extends RtcBaseActivity {
 
     private void removeRemoteUser(int uid) {
         if (uid == io.agora.openlive.Constants.COACH_USER_ID) {
-            removeRtcEventHandler(this);
-            rtcEngine().leaveChannel();
-            finish();
+            closeSession();
         } else {
             removeRtcVideo(uid, false);
             mVideoGridContainer.removeUserVideo(uid, false);
         }
+    }
+
+    private void closeSession() {
+        removeRtcEventHandler(this);
+        rtcEngine().leaveChannel();
+        finish();
     }
 
     @Override
