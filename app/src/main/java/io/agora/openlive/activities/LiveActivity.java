@@ -7,7 +7,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -39,6 +38,11 @@ public class LiveActivity extends RtcBaseActivity {
         setContentView(R.layout.activity_live_room);
         initUI();
         initData();
+    }
+
+    @Override
+    public SurfaceView getSurfaceView() {
+        return findViewById(R.id.sfv_live_room_preview);
     }
 
     private void initUI() {

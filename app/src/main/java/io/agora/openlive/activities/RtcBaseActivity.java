@@ -1,8 +1,12 @@
 package io.agora.openlive.activities;
 
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.List;
 
 import io.agora.openlive.Constants;
 import io.agora.openlive.R;
@@ -13,13 +17,25 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 
 import static io.agora.openlive.Constants.COACH_USER_ID;
 
-public abstract class RtcBaseActivity extends BaseActivity implements EventHandler {
+public abstract class RtcBaseActivity extends BaseActivity implements EventHandler, SurfaceHolder.Callback {
+    private final int FRONT_CAMERA_ID = 1;
+
+    Camera camera;
+    SurfaceView surfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerRtcEventHandler(this);
         configVideo();
+    }
+
+    private void configCameraPreview() {
+        surfaceView = getSurfaceView();
+        surfaceView.getHolder().addCallback(this);
+        surfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        camera = Camera.open(FRONT_CAMERA_ID);
     }
 
     private void configVideo() {
@@ -96,5 +112,45 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
         super.onDestroy();
         removeRtcEventHandler(this);
         rtcEngine().leaveChannel();
+        camera.release();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        configCameraPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        camera.stopPreview();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        Camera.Parameters params = camera.getParameters();
+        List<Camera.Size> sizes = params.getSupportedPreviewSizes();
+        Camera.Size selected = sizes.get(0);
+        params.setPreviewSize(selected.width, selected.height);
+        camera.setParameters(params);
+
+        camera.startPreview();
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        try {
+            camera.setPreviewDisplay(surfaceView.getHolder());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
+    public abstract SurfaceView getSurfaceView();
 }
