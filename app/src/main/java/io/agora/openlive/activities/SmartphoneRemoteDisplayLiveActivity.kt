@@ -15,7 +15,6 @@ import com.google.android.gms.cast.CastMediaControlIntent
 import com.google.android.gms.cast.CastRemoteDisplayLocalService
 import com.google.android.gms.cast.CastRemoteDisplayLocalService.NotificationSettings
 import com.google.android.gms.common.api.Status
-import io.agora.openlive.Constants
 import io.agora.openlive.R
 import io.agora.openlive.service.CastRemoteDisplayService
 import kotlinx.android.synthetic.main.activity_smartphone_remote_display_live.*
@@ -51,6 +50,7 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
             castRemoteDisplayService!!.onDismissPresentation()
             castRemoteDisplayService!!.stopService(castRemoteDisplayServiceIntent)
         }
+        mediaRouter!!.selectRoute(mediaRouter!!.defaultRoute)
         mediaRouter!!.removeCallback(mMediaRouterCallback)
         finish()
     }
@@ -154,7 +154,7 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
                     override fun onRemoteDisplaySessionError(errorReason: Status) {
                         val code = errorReason.statusCode
                         Log.d(TAG, "onServiceError: $code")
-
+                        closeSession()
                     }
                 })
     }
