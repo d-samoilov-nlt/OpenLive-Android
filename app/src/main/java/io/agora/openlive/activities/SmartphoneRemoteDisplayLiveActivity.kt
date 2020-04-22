@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import android.view.View
 import android.widget.Chronometer
 import android.widget.RelativeLayout
 import androidx.mediarouter.media.MediaRouteSelector
@@ -30,6 +31,7 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
     private var mediaRouter: MediaRouter? = null
     private var mediaRouteSelector: MediaRouteSelector? = null
     private var castRemoteDisplayServiceIntent: Intent? = null
+    private var castRemoteDisplayService: CastRemoteDisplayLocalService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +39,6 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
         setupCastConfig()
 
         chronometer = cm_smart_remote_display_timer
-        chronometer!!.base = SystemClock.elapsedRealtime();
-        chronometer!!.start()
         rlUserPreview = rl_smart_remote_display_preview
 
         iv_smart_remote_display_timer_leave.setOnClickListener {
@@ -48,11 +48,18 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
     }
 
     private fun closeSession() {
-        if (castRemoteDisplayServiceIntent != null) {
-            stopService(castRemoteDisplayServiceIntent)
+        if (castRemoteDisplayService != null) {
+            castRemoteDisplayService!!.stopService(castRemoteDisplayServiceIntent)
         }
         mediaRouter!!.removeCallback(mMediaRouterCallback)
         finish()
+    }
+
+    private fun showSessionStartedMode() {
+        chronometer!!.base = SystemClock.elapsedRealtime();
+        chronometer!!.start()
+        chronometer!!.visibility = View.VISIBLE
+        tv_smart_remote_display_loading.visibility = View.GONE
     }
 
     override fun onResume() {
@@ -136,18 +143,17 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
                 CastRemoteDisplayService::class.java, getString(R.string.cast_app_id),
                 castDevice, settings,
                 object : CastRemoteDisplayLocalService.Callbacks {
-                    override fun onServiceCreated(
-                            service: CastRemoteDisplayLocalService) {
+                    override fun onServiceCreated(service: CastRemoteDisplayLocalService) {
                         Log.d(TAG, "onServiceCreated")
                     }
 
                     override fun onRemoteDisplaySessionEnded(p0: CastRemoteDisplayLocalService?) {
-                        Log.d(TAG, "onRemoteDisplaySessionEnded")
+                        closeSession()
                     }
 
-                    override fun onRemoteDisplaySessionStarted(
-                            service: CastRemoteDisplayLocalService) {
-                        Log.d(TAG, "onServiceStarted")
+                    override fun onRemoteDisplaySessionStarted(service: CastRemoteDisplayLocalService) {
+                        castRemoteDisplayService = service
+                        showSessionStartedMode()
                     }
 
                     override fun onRemoteDisplaySessionError(errorReason: Status) {
