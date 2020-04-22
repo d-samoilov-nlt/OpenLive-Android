@@ -117,7 +117,7 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
         RelativeLayout.LayoutParams textParams =
                 new RelativeLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                        ViewGroup.LayoutParams.MATCH_PARENT);
         textParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
         textParams.bottomMargin = mStatMarginBottom;
         textParams.leftMargin = STAT_LEFT_MARGIN;

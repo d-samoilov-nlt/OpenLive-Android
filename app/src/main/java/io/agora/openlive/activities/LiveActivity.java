@@ -21,6 +21,8 @@ import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
+import static io.agora.openlive.Constants.COACH_USER_ID;
+
 public class LiveActivity extends RtcBaseActivity {
     private static final String TAG = LiveActivity.class.getSimpleName();
 
@@ -31,6 +33,8 @@ public class LiveActivity extends RtcBaseActivity {
     private RelativeLayout rlViewPreview;
 
     private VideoEncoderConfiguration.VideoDimensions mVideoDimension;
+
+    private boolean isCoachMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class LiveActivity extends RtcBaseActivity {
                 io.agora.openlive.Constants.KEY_CLIENT_ROLE,
                 Constants.CLIENT_ROLE_AUDIENCE);
 
-        boolean isCoachMode = (role == Constants.CLIENT_ROLE_BROADCASTER);
+        isCoachMode = (role == Constants.CLIENT_ROLE_BROADCASTER);
 
         boolean isBroadcaster = (role == Constants.CLIENT_ROLE_BROADCASTER);
 
@@ -103,12 +107,12 @@ public class LiveActivity extends RtcBaseActivity {
 
     @Override
     protected void onGlobalLayoutCompleted() {
-//        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
-//        RelativeLayout.LayoutParams params =
-//                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
-//        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
-//        topLayout.setLayoutParams(params);
-//        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
+        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
+        RelativeLayout.LayoutParams params =
+                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
+        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
+        topLayout.setLayoutParams(params);
+        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
     }
 
     private void startBroadcast() {
@@ -156,12 +160,18 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     private void renderRemoteUser(int uid) {
-        SurfaceView surface = prepareRtcVideo(uid, false);
-        mVideoGridContainer.addUserVideoSurface(uid, surface, false);
+        if (isCoachMode) {
+            SurfaceView surface = prepareRtcVideo(uid, false);
+            mVideoGridContainer.addUserVideoSurface(uid, surface, false);
+
+        } else if (uid == COACH_USER_ID) {
+            SurfaceView surface = prepareRtcVideo(uid, false);
+            mVideoGridContainer.addUserVideoSurface(uid, surface, false);
+        }
     }
 
     private void removeRemoteUser(int uid) {
-        if (uid == io.agora.openlive.Constants.COACH_USER_ID) {
+        if (uid == COACH_USER_ID) {
             closeSession();
         } else {
             removeRtcVideo(uid, false);
