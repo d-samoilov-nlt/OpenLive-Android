@@ -5,7 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    tools:context=".activities.CoachLiveTypeActivityLeg">
+    tools:context=".activities.CoachLiveTypeActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_coach_live_type_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/live_top_layout_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_coach_live_type_smartphone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_coach_live_type_smartphone"
@@ -19,12 +29,12 @@
         android:paddingRight="@dimen/start_broadcast_padding"
         android:text="On smartphone"
         android:textAlignment="gravity"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="@color/start_broadcast_text_color"
         android:textSize="@dimen/text_size_large"
         app:layout_constraintBottom_toTopOf="@+id/mrb_coach_live_type_tv_cast"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rl_coach_live_type_preview"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -40,8 +50,8 @@
         android:visibility="visible"
         app:buttonText="On remote TV"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_coach_live_type_smartphone"
+        app:layout_constraintStart_toStartOf="@+id/tv_coach_live_type_smartphone"
         app:layout_constraintTop_toBottomOf="@+id/tv_coach_live_type_smartphone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

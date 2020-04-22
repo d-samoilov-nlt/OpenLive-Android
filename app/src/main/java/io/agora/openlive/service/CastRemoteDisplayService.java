@@ -81,7 +81,6 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
             mVideoGridContainer = findViewById(R.id.vgv_remote_live_video_grid);
             mVideoGridContainer.setStatsManager(statsManager());
 
-            rtcEngine().setClientRole(CLIENT_ROLE_BROADCASTER);
             startBroadcast();
             joinChannelAsCoach();
         }
