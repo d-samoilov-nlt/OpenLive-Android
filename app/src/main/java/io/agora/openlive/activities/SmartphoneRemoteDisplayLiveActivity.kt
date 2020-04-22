@@ -49,6 +49,7 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
 
     private fun closeSession() {
         if (castRemoteDisplayService != null) {
+            castRemoteDisplayService!!.onDismissPresentation()
             castRemoteDisplayService!!.stopService(castRemoteDisplayServiceIntent)
         }
         mediaRouter!!.removeCallback(mMediaRouterCallback)
@@ -75,7 +76,6 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
         super.onDestroy()
         stopUserPreview()
         chronometer!!.stop()
-        closeSession()
     }
 
     private fun startUserPreview() {
@@ -92,10 +92,6 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
     }
 
     private fun setupCastConfig() {
-        castRemoteDisplayServiceIntent = Intent(
-                this@SmartphoneRemoteDisplayLiveActivity,
-                SmartphoneRemoteDisplayLiveActivity::class.java)
-
         if (isRemoteDisplaying()) {
             val castDevice = CastDevice
                     .getFromBundle(mediaRouter!!.selectedRoute.extras)
@@ -131,6 +127,9 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
     }
 
     private fun startCastService(castDevice: CastDevice) {
+        castRemoteDisplayServiceIntent = Intent(
+                this@SmartphoneRemoteDisplayLiveActivity,
+                SmartphoneRemoteDisplayLiveActivity::class.java)
 
         castRemoteDisplayServiceIntent!!.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val notificationPendingIntent = PendingIntent.getActivity(
@@ -140,8 +139,10 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
 
         CastRemoteDisplayLocalService.startService(
                 this@SmartphoneRemoteDisplayLiveActivity,
-                CastRemoteDisplayService::class.java, getString(R.string.cast_app_id),
-                castDevice, settings,
+                CastRemoteDisplayService::class.java,
+                getString(R.string.cast_app_id),
+                castDevice,
+                settings,
                 object : CastRemoteDisplayLocalService.Callbacks {
                     override fun onServiceCreated(service: CastRemoteDisplayLocalService) {
                         Log.d(TAG, "onServiceCreated")

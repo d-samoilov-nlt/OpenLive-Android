@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.google.android.gms.cast.CastPresentation;
 import com.google.android.gms.cast.CastRemoteDisplayLocalService;
@@ -19,7 +18,6 @@ import io.agora.openlive.stats.LocalStatsData;
 import io.agora.openlive.stats.RemoteStatsData;
 import io.agora.openlive.stats.StatsData;
 import io.agora.openlive.ui.VideoGridContainer;
-import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
@@ -27,7 +25,6 @@ import static io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER;
 
 public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
     private static final String TAG = "CastRemoteDisplayServ";
-
 
     private CastPresentation mPresentation;
 
@@ -44,7 +41,6 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
     private void dismissPresentation() {
         if (mPresentation != null) {
             mPresentation.dismiss();
-            mPresentation = null;
         }
     }
 
@@ -96,10 +92,6 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
 
         private void startBroadcast() {
             rtcEngine().setClientRole(CLIENT_ROLE_BROADCASTER);
-        }
-
-        private void stopBroadcast() {
-            rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
         }
 
         @Override
