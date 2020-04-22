@@ -116,9 +116,14 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     private void startBroadcast() {
+        int uid = 0;
+        if (isCoachMode) {
+            uid = COACH_USER_ID;
+        }
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
         mMuteAudioBtn.setActivated(true);
-        SurfaceView surfaceView = prepareRtcVideo(0, true);
+        SurfaceView surfaceView = prepareRtcVideo(
+                uid, true);
         rlViewPreview.addView(surfaceView);
     }
 

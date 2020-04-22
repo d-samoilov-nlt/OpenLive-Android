@@ -20,6 +20,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import io.agora.openlive.R;
 import io.agora.openlive.ui.MediaRouterButtonView;
+import io.agora.rtc.Constants;
 
 import static io.agora.openlive.activities.SmartphoneRemoteDisplayLiveActivityKt.INTENT_EXTRA_CAST_DEVICE;
 
@@ -58,6 +59,7 @@ public class CoachLiveTypeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CoachLiveTypeActivity.this, LiveActivity.class);
+                intent.putExtra(io.agora.openlive.Constants.KEY_CLIENT_ROLE, Constants.CLIENT_ROLE_BROADCASTER);
                 startActivity(intent);
             }
         });
