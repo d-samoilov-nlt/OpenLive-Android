@@ -49,6 +49,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activities.CoachLiveTypeActivity"
+            android:noHistory="true"
             android:screenOrientation="landscape" />
 
         <service android:name=".service.CastRemoteDisplayService" />

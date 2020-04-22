@@ -184,7 +184,6 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     private void closeSession() {
-        removeRtcEventHandler(this);
         rtcEngine().leaveChannel();
         finish();
     }

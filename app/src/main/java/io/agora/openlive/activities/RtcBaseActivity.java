@@ -1,11 +1,9 @@
 package io.agora.openlive.activities;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.SurfaceView;
 
 import io.agora.openlive.Constants;
-import io.agora.openlive.R;
 import io.agora.openlive.rtc.EventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;

@@ -21,6 +21,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import io.agora.openlive.R;
 import io.agora.openlive.ui.MediaRouterButtonView;
 
+import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static io.agora.openlive.Constants.COACH_USER_ID;
 import static io.agora.openlive.activities.SmartphoneRemoteDisplayLiveActivityKt.INTENT_EXTRA_CAST_DEVICE;
 import static io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER;
@@ -63,6 +64,7 @@ public class CoachLiveTypeActivity extends RtcBaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CoachLiveTypeActivity.this, LiveActivity.class);
                 intent.putExtra(io.agora.openlive.Constants.KEY_CLIENT_ROLE, CLIENT_ROLE_BROADCASTER);
+                intent.addFlags(FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -118,6 +120,7 @@ public class CoachLiveTypeActivity extends RtcBaseActivity {
                     if (castDevice != null) {
                         Intent intent = new Intent(CoachLiveTypeActivity.this, SmartphoneRemoteDisplayLiveActivity.class);
                         intent.putExtra(INTENT_EXTRA_CAST_DEVICE, castDevice);
+                        intent.addFlags(FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                     }
                 }
