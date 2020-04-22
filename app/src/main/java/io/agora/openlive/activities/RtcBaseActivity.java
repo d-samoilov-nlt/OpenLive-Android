@@ -38,11 +38,11 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
         // same channel successfully using the same app id.
         // 2. One token is only valid for the channel name and uid that
         // you use to generate this token.
-        String token = getString(R.string.agora_access_token);
-        if (TextUtils.isEmpty(token) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
-            token = null; // default, no token
-        }
-        rtcEngine().joinChannel(token, config().getChannelName(), "", 0);
+//        String token = getString(R.string.agora_access_token);
+//        if (TextUtils.isEmpty(token.trim()) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
+//            token = null; // default, no token
+//        }
+        rtcEngine().joinChannel(null, config().getChannelName(), "", 0);
     }
 
     public void joinChannelAsCoach() {
@@ -51,11 +51,11 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
         // same channel successfully using the same app id.
         // 2. One token is only valid for the channel name and uid that
         // you use to generate this token.
-        String token = getString(R.string.agora_access_token);
-        if (TextUtils.isEmpty(token) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
-            token = null; // default, no token
-        }
-        rtcEngine().joinChannel(token, config().getChannelName(), "", COACH_USER_ID);
+//        String token = getString(R.string.agora_access_token);
+//        if (TextUtils.isEmpty(token.trim()) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
+//            token = null; // default, no token
+//        }
+        rtcEngine().joinChannel(null, config().getChannelName(), "", COACH_USER_ID);
     }
 
     protected SurfaceView prepareRtcVideo(int uid, boolean local) {

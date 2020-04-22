@@ -26,6 +26,8 @@ import androidx.core.content.ContextCompat;
 import io.agora.openlive.Constants;
 import io.agora.openlive.R;
 
+import static io.agora.openlive.Constants.TEST_CHANNEL_NAME;
+
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MIN_INPUT_METHOD_HEIGHT = 200;
@@ -113,7 +115,7 @@ public class MainActivity extends BaseActivity {
         mBodyLayout = findViewById(R.id.middle_layout);
 
         mTopicEdit = findViewById(R.id.topic_edit);
-        mTopicEdit.setText(Constants.TEST_CHANNEL_NAME);
+        mTopicEdit.setText(TEST_CHANNEL_NAME);
         mTopicEdit.addTextChangedListener(mTextWatcher);
 
         mStartBtn = findViewById(R.id.start_broadcast_button);

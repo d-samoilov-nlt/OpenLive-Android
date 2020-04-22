@@ -69,11 +69,11 @@ abstract class RemoteRtcBaseActivity(context: Context, p1: Display?) : CastPrese
     }
 
     open fun joinChannelAsCoach() {
-        var token: String? = context.getString(R.string.agora_access_token)
-        if (TextUtils.isEmpty(token) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
-            token = null // default, no token
-        }
-        rtcEngine().joinChannel(token, config().channelName, "", Constants.COACH_USER_ID)
+//        var token: String? = context.getString(R.string.agora_access_token)
+//        if (TextUtils.isEmpty(token!!.trim()) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
+//            token = null // default, no token
+//        }
+        rtcEngine().joinChannel(null, config().channelName, "", Constants.COACH_USER_ID)
     }
 
 
