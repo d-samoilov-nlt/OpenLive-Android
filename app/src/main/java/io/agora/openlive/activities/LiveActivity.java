@@ -160,14 +160,8 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     private void renderRemoteUser(int uid) {
-        if (isCoachMode) {
-            SurfaceView surface = prepareRtcVideo(uid, false);
-            mVideoGridContainer.addUserVideoSurface(uid, surface, false);
-
-        } else if (uid == COACH_USER_ID) {
-            SurfaceView surface = prepareRtcVideo(uid, false);
-            mVideoGridContainer.addUserVideoSurface(uid, surface, false);
-        }
+        SurfaceView surface = prepareRtcVideo(uid, false);
+        mVideoGridContainer.addUserVideoSurface(uid, surface, false);
     }
 
     private void removeRemoteUser(int uid) {
