@@ -2,13 +2,11 @@ package io.agora.openlive.activities
 
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Display
 import android.view.SurfaceView
 import com.google.android.gms.cast.CastPresentation
 import io.agora.openlive.AgoraApplication
 import io.agora.openlive.Constants
-import io.agora.openlive.R
 import io.agora.openlive.rtc.EngineConfig
 import io.agora.openlive.rtc.EventHandler
 import io.agora.openlive.stats.StatsManager
@@ -23,7 +21,6 @@ abstract class RemoteRtcBaseActivity(context: Context, p1: Display?) : CastPrese
         AgoraApplication.registerEventHandler(this)
         configVideo()
     }
-
 
     private fun configVideo() {
         val configuration = VideoEncoderConfiguration(
