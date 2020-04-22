@@ -21,6 +21,7 @@ import io.agora.openlive.ui.VideoGridContainer;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
+import static io.agora.openlive.Constants.COACH_USER_ID;
 import static io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER;
 
 public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
@@ -92,6 +93,8 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
 
         private void startBroadcast() {
             rtcEngine().setClientRole(CLIENT_ROLE_BROADCASTER);
+            SurfaceView surface = prepareRtcVideo(COACH_USER_ID, true);
+            mVideoGridContainer.addUserVideoSurface(COACH_USER_ID, surface, true);
         }
 
         @Override
@@ -146,7 +149,7 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
         }
 
         private void removeRemoteUser(int uid) {
-            if (uid == io.agora.openlive.Constants.COACH_USER_ID) {
+            if (uid == COACH_USER_ID) {
                 closeSession();
             } else {
                 removeRtcVideo(uid, false);

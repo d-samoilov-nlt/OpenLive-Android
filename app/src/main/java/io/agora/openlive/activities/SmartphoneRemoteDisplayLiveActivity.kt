@@ -44,7 +44,6 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
         iv_smart_remote_display_timer_leave.setOnClickListener {
             closeSession()
         }
-        startUserPreview()
     }
 
     private fun closeSession() {
@@ -76,11 +75,6 @@ class SmartphoneRemoteDisplayLiveActivity : RtcBaseActivity() {
         super.onDestroy()
         stopUserPreview()
         chronometer!!.stop()
-    }
-
-    private fun startUserPreview() {
-        val surfaceView = prepareRtcVideo(Constants.COACH_USER_ID, true)
-        rlUserPreview!!.addView(surfaceView)
     }
 
     private fun stopUserPreview() {
