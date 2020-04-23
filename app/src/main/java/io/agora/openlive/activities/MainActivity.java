@@ -1,7 +1,6 @@
 package io.agora.openlive.activities;
 
 import android.Manifest;
-import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,17 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import io.agora.openlive.Constants;
 import io.agora.openlive.R;
 
 import static io.agora.openlive.Constants.TEST_CHANNEL_NAME;
 
 public class MainActivity extends BaseActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int MIN_INPUT_METHOD_HEIGHT = 200;
-    private static final int ANIM_DURATION = 200;
-
-    // Permission request code of any integer value
     private static final int PERMISSION_REQ_CODE = 1 << 4;
 
     private String[] PERMISSIONS = {
@@ -44,30 +35,8 @@ public class MainActivity extends BaseActivity {
 
     private Rect mVisibleRect = new Rect();
     private int mLastVisibleHeight = 0;
-    private RelativeLayout mBodyLayout;
-    private int mBodyDefaultMarginTop;
     private EditText mTopicEdit;
     private TextView mStartBtn;
-
-    private Animator.AnimatorListener mLogoAnimListener = new Animator.AnimatorListener() {
-        @Override
-        public void onAnimationStart(Animator animator) {
-            // Do nothing
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animator) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animator) {
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animator) {
-            // Do nothing
-        }
-    };
 
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
@@ -99,7 +68,6 @@ public class MainActivity extends BaseActivity {
         int visibleHeight = mVisibleRect.bottom - mVisibleRect.top;
         if (visibleHeight == mLastVisibleHeight) return;
 
-        boolean inputShown = mDisplayMetrics.heightPixels - visibleHeight > MIN_INPUT_METHOD_HEIGHT;
         mLastVisibleHeight = visibleHeight;
 
     }
@@ -112,47 +80,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initUI() {
-        mBodyLayout = findViewById(R.id.middle_layout);
-
         mTopicEdit = findViewById(R.id.topic_edit);
         mTopicEdit.setText(TEST_CHANNEL_NAME);
         mTopicEdit.addTextChangedListener(mTextWatcher);
 
         mStartBtn = findViewById(R.id.start_broadcast_button);
         if (TextUtils.isEmpty(mTopicEdit.getText())) mStartBtn.setEnabled(false);
-    }
-
-    @Override
-    protected void onGlobalLayoutCompleted() {
-        adjustViewPositions();
-    }
-
-    private void adjustViewPositions() {
-        // Setting btn move downward away the status bar
-        ImageView settingBtn = findViewById(R.id.setting_button);
-        RelativeLayout.LayoutParams param = (RelativeLayout.LayoutParams) settingBtn.getLayoutParams();
-        param.topMargin += mStatusBarHeight;
-        settingBtn.setLayoutParams(param);
-
-        // Logo is 0.48 times the screen width
-        // ImageView logo = findViewById(R.id.main_logo);
-        int size = (int) (mDisplayMetrics.widthPixels * 0.48);
-        param.width = size;
-        param.height = size;
-
-        // Bottom margin of the main body should be two times it's top margin.
-        param = (RelativeLayout.LayoutParams) mBodyLayout.getLayoutParams();
-        param.topMargin = (mDisplayMetrics.heightPixels -
-                mBodyLayout.getMeasuredHeight() - mStatusBarHeight) / 3;
-        mBodyLayout.setLayoutParams(param);
-        mBodyDefaultMarginTop = param.topMargin;
-
-        // The width of the start button is roughly 0.72
-        // times the width of the screen
-        mStartBtn = findViewById(R.id.start_broadcast_button);
-        param = (RelativeLayout.LayoutParams) mStartBtn.getLayoutParams();
-        param.width = (int) (mDisplayMetrics.widthPixels * 0.72);
-        mStartBtn.setLayoutParams(param);
     }
 
     public void onSettingClicked(View view) {
@@ -237,12 +170,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void resetUI() {
-        resetLogo();
         closeImeDialogIfNeeded();
-    }
-
-    private void resetLogo() {
-        mBodyLayout.setY(mBodyDefaultMarginTop);
     }
 
     private void registerLayoutObserverForSoftKeyboard() {

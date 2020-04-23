@@ -24,8 +24,6 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 import static io.agora.openlive.Constants.COACH_USER_ID;
 
 public class LiveActivity extends RtcBaseActivity {
-    private static final String TAG = LiveActivity.class.getSimpleName();
-
     private VideoGridContainer mVideoGridContainer;
     private ImageView mMuteAudioBtn;
     private ImageView mMuteVideoBtn;
@@ -103,16 +101,6 @@ public class LiveActivity extends RtcBaseActivity {
     private void initData() {
         mVideoDimension = io.agora.openlive.Constants.VIDEO_DIMENSIONS[
                 config().getVideoDimenIndex()];
-    }
-
-    @Override
-    protected void onGlobalLayoutCompleted() {
-        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
-        RelativeLayout.LayoutParams params =
-                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
-        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
-        topLayout.setLayoutParams(params);
-        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
     }
 
     private void startBroadcast() {
@@ -259,10 +247,6 @@ public class LiveActivity extends RtcBaseActivity {
     public void finish() {
         super.finish();
         statsManager().clearAllData();
-    }
-
-    public void onLeaveClicked(View view) {
-        finish();
     }
 
     public void onSwitchCameraClicked(View view) {

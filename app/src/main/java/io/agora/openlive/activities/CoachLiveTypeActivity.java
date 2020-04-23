@@ -127,6 +127,7 @@ public class CoachLiveTypeActivity extends RtcBaseActivity {
 
                 @Override
                 public void onRouteUnselected(MediaRouter router, MediaRouter.RouteInfo info) {
+                    // Do nothing at the moment
                 }
             };
 

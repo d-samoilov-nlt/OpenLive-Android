@@ -109,12 +109,12 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
 
         @Override
         public void onLastmileQuality(int quality) {
-
+            // Do nothing at the moment
         }
 
         @Override
         public void onLastmileProbeResult(IRtcEngineEventHandler.LastmileProbeResult result) {
-
+            // Do nothing at the moment
         }
 
         @Override
@@ -139,7 +139,7 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
 
         @Override
         public void onLeaveChannel(IRtcEngineEventHandler.RtcStats stats) {
-
+            // Do nothing at the moment
         }
 
         private void renderRemoteUser(int uid) {
@@ -233,7 +233,6 @@ public class CastRemoteDisplayService extends CastRemoteDisplayLocalService {
             super.onDestroy();
             statsManager().clearAllData();
         }
-
     }
 
 }

@@ -22,7 +22,7 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
     private void configVideo() {
         VideoEncoderConfiguration configuration = new VideoEncoderConfiguration(
                 Constants.VIDEO_DIMENSIONS[config().getVideoDimenIndex()],
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24,
                 VideoEncoderConfiguration.STANDARD_BITRATE,
                 VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
         );
@@ -31,28 +31,10 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
     }
 
     public void joinChannelAsStudent() {
-        // Initialize token, extra info here before joining channel
-        // 1. Users can only see each other after they join the
-        // same channel successfully using the same app id.
-        // 2. One token is only valid for the channel name and uid that
-        // you use to generate this token.
-//        String token = getString(R.string.agora_access_token);
-//        if (TextUtils.isEmpty(token.trim()) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
-//            token = null; // default, no token
-//        }
         rtcEngine().joinChannel(null, config().getChannelName(), "", 0);
     }
 
     public void joinChannelAsCoach() {
-        // Initialize token, extra info here before joining channel
-        // 1. Users can only see each other after they join the
-        // same channel successfully using the same app id.
-        // 2. One token is only valid for the channel name and uid that
-        // you use to generate this token.
-//        String token = getString(R.string.agora_access_token);
-//        if (TextUtils.isEmpty(token.trim()) || TextUtils.equals(token, "#YOUR ACCESS TOKEN#")) {
-//            token = null; // default, no token
-//        }
         rtcEngine().joinChannel(null, config().getChannelName(), "", COACH_USER_ID);
     }
 

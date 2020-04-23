@@ -8,6 +8,7 @@
         android:id="@+id/setting_button"
         android:layout_width="@dimen/setting_btn_size"
         android:layout_height="@dimen/setting_btn_size"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

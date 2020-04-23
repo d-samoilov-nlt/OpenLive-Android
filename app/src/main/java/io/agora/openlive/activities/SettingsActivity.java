@@ -7,8 +7,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -91,16 +89,6 @@ public class SettingsActivity extends BaseActivity {
         }
         String[] strings = getResources().getStringArray(R.array.mirror_modes);
         view.setText(strings[index]);
-    }
-
-    @Override
-    protected void onGlobalLayoutCompleted() {
-        // Adjust for status bar height
-        RelativeLayout titleLayout = findViewById(R.id.role_title_layout);
-        LinearLayout.LayoutParams params =
-                (LinearLayout.LayoutParams) titleLayout.getLayoutParams();
-        params.height += mStatusBarHeight;
-        titleLayout.setLayoutParams(params);
     }
 
     @Override

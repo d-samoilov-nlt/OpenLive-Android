@@ -8,6 +8,6 @@
     <!-- Obtain a temp Access Token at https://dashboard.agora.io -->
     <!-- You will need to deploy your own token server for production release -->
     <!-- Leave this value empty if Security keys/Token is not enabled for your project -->
-    <string name="agora_access_token" translatable="false">uaCOYRhxXOMAAAAAEACVhpaLbGahXgEAAQBrZqFe+XEXWRcMhk6x+tKLg2RhxXOMAAAAAEAALV6bzNf2fXgEAAQA1/Z9e</string>
+    <string name="agora_access_token" translatable="false"></string>
     <string name="cast_app_id">4F8B3483</string>
 </resources>

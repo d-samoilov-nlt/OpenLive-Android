@@ -5,6 +5,7 @@
 
     <RelativeLayout
         android:id="@+id/role_title_layout"
+        android:layout_marginTop="@dimen/live_top_layout_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_title_layout_height">
 
